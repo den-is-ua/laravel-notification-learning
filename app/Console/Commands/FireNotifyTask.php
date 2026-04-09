@@ -17,6 +17,7 @@ class FireNotifyTask extends Command
     public function handle()
     {
         $user = User::factory()->create();
-        Notification::sendNow($user, new DBNotify($this->argument('text')));
+        $user->notifyNow(new DBNotify($this->argument('text')));
+        $this->info('The message has been sent to DB');
     }
 }
