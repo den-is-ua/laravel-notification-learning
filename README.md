@@ -7,6 +7,41 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## About this project
+
+This repository is a **learning project** for [Laravel notifications](https://laravel.com/docs/notifications): sending notifications, using the `database` channel, and related behavior in a small, runnable app.
+
+## Docker
+
+From the project root, build and start the stack (PHP-FPM app, Nginx, Node for Vite):
+
+```bash
+docker compose up -d --build
+```
+
+- Web app: [http://localhost:8080](http://localhost:8080) (override with `APP_PORT` in `.env`)
+- Vite dev server port: `5173` by default (override with `VITE_PORT`)
+
+Run Artisan inside the `app` container:
+
+```bash
+docker compose exec app php artisan <command>
+```
+
+## CLI: `fire:db-notify`
+
+Custom Artisan command: **`fire:db-notify {text}`** — creates a user via the factory, then sends a `DBNotify` notification with the given text **immediately** using `Notification::sendNow`, so the notification is stored on the `database` channel without going through HTTP.
+
+```bash
+php artisan fire:db-notify "Your message here"
+```
+
+With Docker:
+
+```bash
+docker compose exec app php artisan fire:db-notify "Your message here"
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
