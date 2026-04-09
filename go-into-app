@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT"
+
+if ! docker ps --format '{{.Names}}' | grep -qx 'laravel_app'; then
+  echo "laravel_app is not running. Start with: docker compose up -d" >&2
+  exit 1
+fi
+
+exec docker exec -it laravel_app bash
